@@ -1,0 +1,242 @@
+Command Shell Usage:
+
+/*---------------------------------------------------------------------------------------------------*/
+(1) Run ./myshell
+    You will see that the input prompt has a $, which is correct because that is the bash prompt
+    Also, if you can see the prompt is "myShell:'PWD'$", which includes myShell followed by your
+    current working directory, followed by '$'. As you change your CWD, you will see this bash prompt
+    will change too.
+
+    Testing:
+    1.
+    -do
+     ls
+    You will see that it prints the contents of the curr dir, which is correct because in Linux
+    Command shell, the ls command will show all the files or directory in the curr dir.
+
+    2.
+    -do
+     ls -a -l
+    You will see that it prints all the entries and file with "." and List in long format.
+    A total sum of all file sizes is output on a line before the long listing.
+    Output is one entry per line.
+
+    3.
+    -do
+     ls -lagHA
+    You will see that it can prints all the options that "ls" command includes.
+
+    4.
+    -do
+     ls -lt /var/log
+    You will see it prints List the files in /var/log, sorting the output such that the most
+    recently modified entries are printed first one as the ls man page in Linux description.
+
+    5.
+    -do
+     git
+    You will see it prints the "git" manual descriptions.
+
+    6.
+    -do
+     man --help
+    You will see it prints all the man page options. 
+
+    7.
+    -do
+     ls               -a
+    You will see the same action as "ls -a -l" even though there are several spaces between ls and
+    its optional command.
+
+    8.
+    -do
+                                    ls
+    You will see no matter how many spaces in the command line input, this program can still execute
+    the command without the interference of spaces.
+
+    9.
+    -do
+             Hello world
+    You will see it prints "Command Hello world not found", which is correct because based on the
+    instruction in commandshell.txt, when command cannot be found, it should print "command" not
+    found.
+
+    11.
+    -do
+	        echo       a\  b\\d
+    You will see it prints "a  b\d", which is correct since it can separate the white spaces and the
+    "\".
+
+    12.
+    -do
+         echo ;;;\  ;;;\ 12;   ;$%^&*
+    You will see it prints ";;;\  ;;;\ 12;   ;$%^&*", which is correct.
+
+    13.
+    -do
+    pwd
+    You will see it prints the current working directory, which is "/home/jw558/ece551/mp_miniproject"
+
+    14.
+    -do
+     echo aaaaa\\aaaaaa\\
+    You will see it prints "aaaaa\aaaaaa\", which is correct because it split the "\\" as "\" and
+    not interfered by "\\".
+
+    15.
+    -do
+    echo aaaaa\\a\aaaaa\\
+    You will see it prints "aaaaa\aaaaaa\", which is correct because the "\" is as space and the rest
+    of the variables will connect to it.
+
+    *all the commands above are non-built-in functions, which is child process. Therefore, in this
+    program, when the command is child process and succeed the execution, it will print "Program
+    exited with status 0. If command not found, it will print status 2. The number depends on the
+    status of the command.*
+
+    16.
+    -do
+               exit
+    You will see it prints "Command is exit" and this program is terminated. This program also
+    terminate when encounter EOF. *this "exit and EOF" will not print out signal status, which is
+    correct because it is not a regular command.*
+
+/*---------------------------------------------------------------------------------------------------*/
+(2)Run builtinfunctions--"cd"
+
+    1.
+    -do
+     cd
+     You will see it prints "ERROR usage: cd should have 1 argument.", which is correct since the
+     "cd" command should be followed by one arguments, the changing directory.
+
+    2.    
+    -do
+     cd ..
+     You will see that it changes to the parent directory, which is correct because in Linux Com-
+     mand shell, the ls command will show all the files or directory in the curr dir. This indeca-
+     tes that myShell is built with searching '..' and have the built-in function, such as 'cd'.
+    
+    3.
+    -do
+     cd cp
+     You will see that it prints the "ERROR usage: fail in cd command--No such file or directory",
+     which is correct because the "cp" is not directory. Therefore, this program prints the ERROR
+     msg for the users.
+
+    4.
+    -do
+     cd         ..
+     You will see it changes the directory to the parent dir, which is correct even if there are
+     several spaces between the command.
+
+    5.
+    -do
+            cd        /home/jw558
+    You will see this program change the relative path directory to /home/jw558
+
+    6.
+    -do(under the /home/jw558/ece551)
+    cd mp_miniproject
+    You will be directed to /home/jw558/ece551/mp_miniproject, which is correct since it is a right
+    directory.
+
+    7.
+    -do
+    cd ~
+    You will be directed to the "HOME" directory, which is correct and convenient usage in this program.
+
+/*---------------------------------------------------------------------------------------------------*/
+(3)Run builtinfunction--"set" and "export"
+   1.
+   -do
+            set      testA_           testA_Name    and     with      spaces
+   This program will keep this testA_ variable into the map, which also holds default environment
+   variables. The testA_ is a correct name even it includes "_" underscore sign.
+   -do
+   env
+   You will see no new testA_ in environment since you did not execute "export". This is correct because
+   you need to "export testA_" so this program will store the testA_ into environment.
+   -do
+             export          testA_
+   This step will export the testA_ into environment! Cong! You will see the testA_ in your environment!
+   -do
+   env
+   You will see the full default environment variable with their corresponding value and most important is
+   you can see your setting testA_. This step (3)-1. is shown as following(whthout first time do "env"):
+
+   myShell:/home/jw558/ece551/mp_miniproject$         set      testA_           testA_Name    and     with      spaces
+   myShell:/home/jw558/ece551/mp_miniproject$          export          testA_
+   myShell:/home/jw558/ece551/mp_miniproject$env
+   XDG_SESSION_ID=90944
+   TERM=xterm-256color
+   SHELL=/bin/bash
+   SSH_CLIENT=10.197.85.130 57533 22
+   SSH_TTY=/dev/pts/53
+   USER=jw558
+   LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+   MAIL=/var/mail/jw558
+   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+   PWD=/home/jw558/ece551/mp_miniproject
+   EDITOR=emacs -nw
+   LANG=en_US.UTF-8
+   SHLVL=1
+   HOME=/home/jw558
+   LOGNAME=jw558
+   VISUAL=emacs -nw
+   SSH_CONNECTION=10.197.85.130 57533 152.3.77.223 22
+   LC_CTYPE=UTF-8
+   LESSOPEN=| /usr/bin/lesspipe %s
+   XDG_RUNTIME_DIR=/run/user/1192
+   LESSCLOSE=/usr/bin/lesspipe %s %s
+   OLDPWD=/home/jw558
+   _=./myShell
+   testA_=          testA_Name    and     with      spaces
+   Program exited with status 0
+   
+   2.
+   -do
+        set    _testB
+   You will see nothing at this step.
+   -do
+        export       _testB
+   -do
+        env
+   You will see it prints "_testB=", which is correct because you did not provide the value of variable, "_testB".
+   However, this program is smart. It can help you create a new variable name "_testB" in your environment after
+   you export _testB.
+
+   3.
+   -do
+           set        $TERM       $testing still has a lot of spaces
+   -do
+       export       TERM
+   -do
+      env
+   You will see you have changed the value of default environment variable "TERM" as following value:
+   "TERM=      $testing still has a lot of spaces"
+
+   4.
+   -do
+          set      $TERM
+   You will see this program printing "$ should have potential changing variable value", which is correct because
+   if you want to change the default environment variable, you MUST add value in it or it does not make sense and do
+   nothing(nothing would happen to your default environment varialbe)
+
+   5.
+   -do
+        set      $test_C \test/C_test
+   -do
+             export        test_C
+   -do
+     env
+   You will see it prints "test_C=\test/C_test"
+
+   6.
+   -do
+        set      $test_C
+   You will see it prints "$ should have potential changing variable value", which is correct since, in this
+   program, the "$" means you try to enter the default environment variable. The "test_C" is not the default
+   environment variable, so this program does not allow you to enter it so it prints "$ should have potential
+   changing variable value"
+ 
