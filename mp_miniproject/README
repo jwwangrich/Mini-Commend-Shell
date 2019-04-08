@@ -1,1 +1,88 @@
 This is a mini command shell
+
+Read a command name and, run it
+---------------------------------------
+
+  This program is able to call "myShell." Whenever the command shell
+  expects input, it prints a prompt ("myShell$").
+  It reads one line of input (from stdin), which is the name of a
+  command.
+
+  This shell can then run the specified command--see the man pages for
+  the system calls fork, execve, and waitpid.
+
+  After the specified program exits, this shell prints:
+    Program exited with status 0
+    [replace 0 with the actual exit status]
+  OR
+    Program was killed by signal 11
+    [replace 11 with the actual signal]
+
+  Then shell prints the "myShell$" prompt again and repeat
+  the process.
+
+  If the user types the command "exit," or EOF is encountered reading
+  from stdin, then the shell should exit.
+
+Improved commands
+--------------------------
+
+  For the first, this shell uses the PATH environment variable that
+  exists when it starts (see man getenv), which will be a
+  colon-delimited list of paths. When the user types a command name that
+  does not have a forward slash (/) in it, shell will search each
+  directory specified in the PATH (in order) for the specified program.
+  If the program is found, this shell should execute it. If not, 
+  shell should print
+    Command commandName not found
+    [replace commandName with the actual command name]
+  If the path name does contain a / in it, shell should only look in the
+  specified directory (which may not be on the PATH at all). Note that a
+  path with a / in it could be relative (.e.g, ./myProgram) or absolute
+  (e.g. /bin/ls).
+
+  For the second, this shell should also make commands such that they can take
+  arguments separated by white space. For example
+    ./myProgram a b 23
+  runs myProgram with arguments "a," "b," and "23." There may be an
+  arbitrary amount of whitespace in between arguments, so 
+    ./myProgram         a               b     23
+  has the same behavior as the previous example. However, any white space
+  which is escaped with a \ should be literally included in the argument
+  and not used as a separator:
+    ./myProgram  a\ b c\ \ d
+  should run myProgram with two arguments "a b" and "c  d." Note that
+    ./myProgram a\  b c \ d
+  whould have arguments "a " "b" "c" and " d," as the non-escaped spaces
+  separate arguments.
+
+Directories and variables
+---------------------------------
+
+   1. Add the "cd" command to change the current directory. See the chdir
+      function.
+   2. The prompt should show the current directory before the $.
+      That is, if your current directory is /home/drew, the prompt should
+      be
+        myShell:/home/drew $
+   3. This shell should provide access to variables. A variable name
+      must be a combination of letters (case sensitive), underscores,
+      and numbers, (e.g., PATH, xyz, abc42, my_var).
+   4. If the user writes $varname on the command line, shell should
+      replace it with the current value of that variable.
+   5. Shell also provides two built in commands:
+      - set var value
+        This should set the variable var to the string on the rest of the
+	command line (even if it contains spaces, etc.) Shell is able to
+	remember this value, and makes use of it in future $ evaluations;
+	however, it is not be placed in the environment for other
+	programs.
+      - export var
+        This should put the current value of var into the environment for
+	other programs.
+   6. If users "set" a variable (but dont "export" it) the new value should
+      not show up in "env." If users "export" it, the new value should show
+      up in "env".
+
+  Note also that if the user changes PATH, it should affect where the shell
+  searches for programs.
